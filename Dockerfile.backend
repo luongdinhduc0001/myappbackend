@@ -1,0 +1,22 @@
+FROM node:18
+
+WORKDIR /usr/src/app
+
+# Copy package files and install dependencies
+COPY package*.json ./
+RUN npm install
+RUN npm install express
+RUN npm install multer
+# Copy all source files
+COPY . .
+
+# Create uploads directory and set permissions
+RUN mkdir -p uploads && chmod 777 uploads
+
+# Make start script executable
+RUN chmod +x start.sh
+
+EXPOSE 5000
+
+# Use start script instead of direct node command
+CMD ["./start.sh"]
